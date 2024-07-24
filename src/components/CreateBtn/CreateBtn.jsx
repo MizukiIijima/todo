@@ -7,6 +7,13 @@ export const CreateBtn = () => {
     }
 
     return(
-        <Button variant="contained" onClick={createMemo} color="primary">新規作成</Button>
+        <Button
+            variant="contained"
+            onClick={createMemo}
+            color="primary"
+            sx={{
+                marginLeft: "auto", 
+                display: "block", 
+            }}>新規作成</Button>
     );
 }
