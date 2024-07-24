@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+.filter{
+    background-color: white;
+    margin-top: 2rem;
+    border-radius: 5px;
+    padding: 1.25rem;
+    width: 80%;
+    min-width: 300px;
+}
+.form .statusGroup{
+    flex-direction: row;
+}
+.statusTitle{
+    
+}
+.statusBlock{
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.3rem;
+}
+.keywordTitle{
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+.keywordText{
+    border: 1px solid #CFCFCF;
+    border-radius: 3px;
+    width: 70%;
+    line-height: 2rem;
+}
+.searchBtn{
+    width: 12.8125rem;
+    line-height: 2rem;
+    border: none;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+}
