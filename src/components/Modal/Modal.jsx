@@ -12,7 +12,7 @@ export const ModalComponent = () => {
 
     const {register, handleSubmit, formState: { errors }} = useForm({});
 
-    const [modalFlag, setModalFlag] = useState(true);
+    const [modalFlag, setModalFlag] = useState(false);
 
     const onsubmit = () => {
         alert ('OK')
@@ -21,7 +21,7 @@ export const ModalComponent = () => {
     return(
         <form onSubmit={handleSubmit(onsubmit)}>
             <Modal
-                isOpen={true}
+                isOpen={modalFlag}
                 overlayClassName="customOverlay"
                 className="customContent"
             >
