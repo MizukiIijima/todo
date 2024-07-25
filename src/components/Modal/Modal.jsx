@@ -4,9 +4,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ModalCreateBtn } from "./ModalCreateBtn";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import { Button, Icon, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import "./Modal.css";
-import { Translate } from "@mui/icons-material";
 
 export const ModalComponent = () => {
 
