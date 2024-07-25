@@ -1,9 +1,9 @@
 import { Button } from "@mui/material";
 
-export const CreateBtn = () => {
+export const CreateBtn = ({modalFlag, setModalFlag}) => {
     
     const createMemo = () => {
-
+        setModalFlag(true);
     }
 
     return(
