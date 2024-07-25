@@ -1,0 +1,30 @@
+.customOverlay{
+    position: fixed;
+    inset: 0px;
+    background-color: rgb(62 62 62 / 75%);
+}
+.customContent{
+    position: absolute;
+    inset: 70px;
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255, 255, 255);
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 6rem 1.5rem;
+    margin: 3rem auto;
+    max-width: 75rem;
+}
+.ReactModalPortal .customTextField{
+    width: 85%;
+    display: block;
+    margin: 2.5rem auto;
+}
+.ReactModalPortal .customTextArea{
+    width: 85%;
+    display: block;
+    margin: 3.5rem auto;
+}
+.MuiInputBase-root{
+    width: 100%;
+}
