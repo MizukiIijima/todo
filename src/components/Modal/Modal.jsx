@@ -7,14 +7,17 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { TextField } from "@mui/material";
 import "./Modal.css";
 
-export const ModalComponent = () => {
+export const ModalComponent = ({modalFlag, setModalFlag}) => {
 
     const {register, handleSubmit, formState: { errors }} = useForm({});
 
-    const [modalFlag, setModalFlag] = useState(false);
-
     const onsubmit = () => {
         alert ('OK')
+    }
+
+    //モーダルを閉じる
+    const closeModal = () => {
+        setModalFlag(false);
     }
 
     return(
@@ -25,6 +28,7 @@ export const ModalComponent = () => {
                 className="customContent"
             >
                 <CloseOutlinedIcon
+                    onClick={closeModal}
                     sx={{position: "absolute", top: "35px", right: "35px"}}
                 />
                 <TextField type="text" label="タイトル" className="customTextField"
