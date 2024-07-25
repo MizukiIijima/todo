@@ -4,15 +4,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ModalCreateBtn } from "./ModalCreateBtn";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import { TextField } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import "./Modal.css";
 
 export const ModalComponent = ({modalFlag, setModalFlag}) => {
 
     const {register, handleSubmit, formState: { errors }} = useForm({});
 
-    const onsubmit = () => {
-        alert ('OK')
+    const createTask = () => {
+        
     }
 
     //モーダルを閉じる
@@ -21,7 +21,6 @@ export const ModalComponent = ({modalFlag, setModalFlag}) => {
     }
 
     return(
-        <form onSubmit={handleSubmit(onsubmit)}>
             <Modal
                 isOpen={modalFlag}
                 overlayClassName="customOverlay"
@@ -31,44 +30,55 @@ export const ModalComponent = ({modalFlag, setModalFlag}) => {
                     onClick={closeModal}
                     sx={{position: "absolute", top: "35px", right: "35px"}}
                 />
-                <TextField type="text" label="タイトル" className="customTextField"
-                    {...register("title",{
-                        required: "タイトルは必須です",
-                        maxLength: {
-                            value: 30,
-                            message: "30文字以内で入力してください"
-                        }
-                    })
-                    }
-                    InputLabelProps={{
-                        sx: {
-                            transform: "translate(0%, -125%)",
-                            '&.Mui-focused': {
-                                transform: "Translate(14px, -9px) scale(0.75)"
+                <form onSubmit={handleSubmit(createTask)}>
+                    <TextField type="text" label="タイトル" className="customTextField"
+                        {...register("title",{
+                            required: "タイトルは必須です",
+                            maxLength: {
+                                value: 30,
+                                message: "30文字以内で入力してください"
                             }
-                        }
-                    }}
-                />
-                <TextField
-                    label="説明"
-                    className="customTextArea"
-                    multiline
-                    rows={10}
-                    {...register("description", {
-                        required: "説明は必須です",
-                    })}
-                    InputLabelProps={{
-                        sx: {
-                            transform: "translate(0%, -125%)",
-                            '&.Mui-focused': {
-                                transform: "Translate(14px, -9px) scale(0.75)"
+                        })}
+                        error={"title" in errors}
+                        helperText={errors.title?.message}
+                        InputLabelProps={{
+                            sx: {
+                                transform: "translate(0%, -125%)",
+                                '&.Mui-focused': {
+                                    transform: "Translate(14px, -9px) scale(0.75)"
+                                }
                             }
-                        }
-                    }}
-                />
-                <ModalCreateBtn />
+                        }}
+                    />
+                    <TextField
+                        label="説明"
+                        className="customTextArea"
+                        multiline
+                        rows={10}
+                        {...register("description", {
+                            required: "説明は必須です",
+                        })}
+                        error={"description" in errors}
+                        helperText={errors.description?.message}
+                        InputLabelProps={{
+                            sx: {
+                                transform: "translate(0%, -125%)",
+                                '&.Mui-focused': {
+                                    transform: "Translate(14px, -9px) scale(0.75)"
+                                }
+                            }
+                        }}
+                    />
+                    <Button
+                        type="submit"
+                        color="primary"
+                        variant="contained"
+                        sx={{margin: "auto",
+                            display: "block"
+                        }}>作成する
+                    </Button>
+                </form>
             </Modal>
-        </form>
     );
 
 }
