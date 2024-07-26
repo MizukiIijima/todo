@@ -17,8 +17,14 @@ export const ModalComponent = ({modalFlag, setModalFlag, formdata, setFormdata, 
 
     const createTask = (data) => {
         setFormdata(data);
-        localStorage.setItem('title',data.title);
-        localStorage.setItem('description', data.description);
+        const id = Date.now();
+        const task = {
+            title: data.title,
+            description: data.description,
+            status: "notStart"
+        }
+        
+        localStorage.setItem(id, JSON.stringify(task));
         setModalFlag(false);
         reset();
     }
