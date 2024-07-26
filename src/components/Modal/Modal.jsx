@@ -2,17 +2,25 @@
 import Modal from "react-modal";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { ModalCreateBtn } from "./ModalCreateBtn";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { TextField, Button } from "@mui/material";
 import "./Modal.css";
 
-export const ModalComponent = ({modalFlag, setModalFlag}) => {
+export const ModalComponent = ({modalFlag, setModalFlag, formdata, setFormdata, taskTitle, setTaskTitle, taskDescription, setTaskDescription}) => {
 
-    const {register, handleSubmit, formState: { errors }} = useForm({});
+    const {register, handleSubmit, reset, formState: { errors }} = useForm({
+        defaultValues: {
+            title: taskTitle,
+            description: taskDescription,
+        }
+    });
 
-    const createTask = () => {
-        
+    const createTask = (data) => {
+        setFormdata(data);
+        localStorage.setItem('title',data.title);
+        localStorage.setItem('description', data.description);
+        setModalFlag(false);
+        reset();
     }
 
     //モーダルを閉じる
@@ -50,9 +58,7 @@ export const ModalComponent = ({modalFlag, setModalFlag}) => {
                             }
                         }}
                     />
-                    <TextField
-                        label="説明"
-                        className="customTextArea"
+                    <TextField label="説明" className="customTextArea"
                         multiline
                         rows={10}
                         {...register("description", {
