@@ -1,0 +1,11 @@
+.taskList{
+    list-style: none;
+}
+.taskSingle{
+    background-color: white;
+    border-radius: 5px;
+    padding: 1.5rem 2.5rem;
+}
+.taskSingle:not(:first-child){
+    margin-top: 1.5rem;
+}
