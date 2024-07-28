@@ -2,10 +2,10 @@ import Modal from "react-modal";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, InputLabel, MenuItem, Select } from "@mui/material";
 import "./Modal.css";
 
-export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata, tasks, editFlag, setEditFlag, editTaskId, setEditTaskId }) => {
+export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata, tasks, setTasks, editFlag, setEditFlag, editTaskId, setEditTaskId }) => {
 
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm({
         defaultValues: {
@@ -24,6 +24,14 @@ export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata,
         }
     }, [editFlag, editTaskId, setValue]);
 
+    let button;
+    if (editFlag) {
+        button = <Button type="submit" name="edit" color="secondary" variant="contained" sx={{ margin: "auto", display: "block" }}>更新する</Button>;
+    } else {
+        button = <Button type="submit" name="create" color="primary" variant="contained" sx={{ margin: "auto", display: "block" }}>作成する</Button>;
+    }
+
+    //タスク作成時
     const createTask = (data) => {
         setFormdata(data);
         const id = Date.now();
@@ -32,11 +40,19 @@ export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata,
             description: data.description,
             status: "notStart"
         }
+        setTasks([...tasks,{id,...task}])
         localStorage.setItem(id, JSON.stringify(task));
         setModalFlag(false);
         setEditFlag(false);
         setEditTaskId(null);
         reset();
+    }
+
+    //タスク編集時
+    const editTask = (data) => {
+        setModalFlag(false);
+        setEditFlag(false);
+        setEditTaskId(null);
     }
 
     // モーダルを閉じる
@@ -45,6 +61,14 @@ export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata,
         setEditFlag(false);
         setEditTaskId(null);
         reset();
+    }
+
+    const onSubmit = (data, event) => {
+        if (event.nativeEvent.submitter.name === "create") {
+            createTask(data);
+        } else {
+            editTask(data);
+        }
     }
 
     return (
@@ -57,7 +81,17 @@ export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata,
                 onClick={closeModal}
                 sx={{ position: "absolute", top: "35px", right: "35px" }}
             />
-            <form onSubmit={handleSubmit(createTask)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                {editFlag &&
+                <>
+                    <InputLabel className="customSelect">進捗</InputLabel>
+                    <Select className="customSelect">
+                        <MenuItem value={"notStart"}>未着手</MenuItem>
+                        <MenuItem value={"working"}>作業中</MenuItem>
+                        <MenuItem value={"complete"}>完了</MenuItem>
+                    </Select>
+                </>
+                }
                 <TextField type="text" label="タイトル" className="customTextField"
                     {...register("title", {
                         required: "タイトルは必須です",
@@ -78,14 +112,7 @@ export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata,
                     error={"description" in errors}
                     helperText={errors.description?.message}
                 />
-                <Button
-                    type="submit"
-                    color="primary"
-                    variant="contained"
-                    sx={{ margin: "auto", display: "block" }}
-                >
-                    作成する
-                </Button>
+                {button}
             </form>
         </Modal>
     );
