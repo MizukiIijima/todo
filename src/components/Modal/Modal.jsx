@@ -11,6 +11,7 @@ export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata,
         defaultValues: {
             title: "",
             description: "",
+            status: "",
         }
     });
 
@@ -20,6 +21,7 @@ export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata,
             if (task) {
                 setValue("title", task.title);
                 setValue("description", task.description);
+                setValue("status", task.status);
             }
         }
     }, [editFlag, editTaskId, setValue]);
@@ -49,10 +51,25 @@ export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata,
     }
 
     //タスク編集時
-    const editTask = (data) => {
+    const editTask = (data, tasks) => {
+        
+        const updateTask = {
+            title: data.title,
+            description: data.description,
+            status: data.status
+        }
+
+        localStorage.setItem(editTaskId,JSON.stringify(updateTask));
+
+        const updateTasks = tasks.map(task => 
+            task.id === editTaskId ? {id:editTaskId, ...updateTask} : task
+        )
+        setTasks(updateTasks);
         setModalFlag(false);
         setEditFlag(false);
         setEditTaskId(null);
+        reset();
+
     }
 
     // モーダルを閉じる
@@ -67,7 +84,7 @@ export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata,
         if (event.nativeEvent.submitter.name === "create") {
             createTask(data);
         } else {
-            editTask(data);
+            editTask(data, tasks);
         }
     }
 
