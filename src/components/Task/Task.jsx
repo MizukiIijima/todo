@@ -13,8 +13,10 @@ export const Task = ({ tasks, setModalFlag, setEditFlag, setEditTaskId }) => {
         <ul className="taskList">
             {tasks.map((task, index) => (
                 <li className="taskSingle" key={index} onClick={() => handleClick(task.id)}>
-                    <h2>{task.title}</h2>
-                    <button>{task.status}</button>
+                    <div className="taskSingle-block">
+                        <h2>{task.title}</h2>
+                        <button className="taskSingle-button">{task.status}</button>
+                    </div>
                     <p>{task.description}</p>
                 </li>
             ))}
