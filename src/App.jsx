@@ -29,9 +29,6 @@ function App() {
 
     }, [])
 
-    //どのタスクがクリックされたかは、AppからModalに渡す
-    const taskId = tasks.map(task => task.id);
-
     return (
         <>
             <CreateBtn modalFlag={modalFlag} setModalFlag={setModalFlag} />
