@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import "./Task.css";
 
-export const Task = ({ tasks, setModalFlag, setEditFlag, setEditTaskId }) => {
+export const Task = ({ tasks, setTasks, setModalFlag, setEditFlag, setEditTaskId, filteredTasks }) => {
 
     const handleClick = useCallback((taskId) => {
         setModalFlag(true);
@@ -11,7 +11,7 @@ export const Task = ({ tasks, setModalFlag, setEditFlag, setEditTaskId }) => {
 
     const getStatus = (status) => {
         switch(status){
-            case "notstart":
+            case "notStart":
                 return "未着手";
             case "working":
                 return "作業中";

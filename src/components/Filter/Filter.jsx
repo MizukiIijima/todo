@@ -1,28 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button } from "@mui/material";
+import { Button, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import "./Filter.css";
 
-export const Filter = (states, setStatus) => {
+export const Filter = ({states, setStatus, tasks, filterForm, setFilterForm, filteredTasks, setFilteredTasks}) => {
 
-    const onSubmit = () => {
+    const { register, handleSubmit, getValues, setValue} = useForm();
+
+    const searchTask = () => {
+        const filterStatus = getValues();
+        setFilterForm(filterStatus);
+        let filteredTasks = [];
+
+        tasks.forEach(task => {
+            const keywordMatch = task.description.includes(filterStatus.keyword);
+            const statusMatch = filterStatus.status === task.status;
+
+            // 検索キーワードを含みステータスが一致する場合
+            if (keywordMatch && statusMatch) {
+                filteredTasks.push(task);
+            } else if (statusMatch) {
+                filteredTasks.push(task);
+            }
+        });
+
+        setFilteredTasks(filteredTasks);
 
     }
 
+    useEffect(() => {
+        setFilterForm(getValues());
+    }, []);
+
     return(
-        <div className="filter">
-            <p className="statusTitle">ステータス</p>
-            <div className="statusBlock">
-                <input type="radio" id="notStarted" name="status" />
-                <label htmlFor="notStarted">未着手</label>
-                <input type="radio" id="working" name="status" />
-                <label htmlFor="working">作業中</label>
-                <input type="radio" id="complete" name="status" />
-                <label htmlFor="complete">完了</label>
-            </div>
-            <label htmlFor="keyword" className="keywordTitle">キーワード</label>
-            <input type="text" id="keyword" className="keywordText"/>
-            <button className="searchBtn">検索</button>
-        </div>
+        <form onSubmit={handleSubmit(searchTask)} className="filter">
+            <FormLabel>ステータス</FormLabel>
+            <RadioGroup
+                defaultValue={"notStart"}
+                row
+            >
+                <FormControlLabel value={"notStart"} {...register("status")} control={<Radio/>} label={"未着手"}/>
+                <FormControlLabel value={"working"} {...register("status")} control={<Radio/>} label={"作業中"}/>
+                <FormControlLabel value={"complete"} {...register("status")} control={<Radio/>} label={"完了"}/>
+            </RadioGroup>
+            <TextField 
+                type="text" label="キーワード" className="keywordText"
+                defaultValue={""}
+                {...register("keyword")}
+            />
+            <Button
+                type="submit"
+                variant="contained"
+                color="inherit"
+                sx={{marginTop: "0.5rem", display: "block"}}
+            >検索</Button>
+        </form>
     );
 }

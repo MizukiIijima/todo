@@ -15,6 +15,8 @@ function App() {
     const [tasks, setTasks] = useState([]);
     const [editFlag, setEditFlag] = useState(false);
     const [editTaskId, setEditTaskId] = useState(false);
+    const [filterForm, setFilterForm] = useState({});
+    const [filteredTasks, setFilteredTasks] = useState([]);
 
     //ローカルストレージの値をformdataに設定
     useEffect(() => {
@@ -27,12 +29,22 @@ function App() {
         }
         setTasks(storedTasks);
 
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (filteredTasks.length) {
+            setTasks(filteredTasks);
+        }
+    }, [filteredTasks]);
 
     return (
         <>
             <CreateBtn modalFlag={modalFlag} setModalFlag={setModalFlag} />
-            <Filter status={status} setStatus={setStatus} />
+            <Filter
+                status={status} setStatus={setStatus}
+                tasks={tasks}
+                filterForm={filterForm} setFilterForm={setFilterForm}
+                filteredTasks={filteredTasks} setFilteredTasks={setFilteredTasks}/>
             <ModalComponent
                 modalFlag={modalFlag} setModalFlag={setModalFlag}
                 formdata={formdata} setFormdata={setFormdata}
@@ -41,8 +53,10 @@ function App() {
                 editTaskId={editTaskId} setEditTaskId={setEditTaskId}
             />
             <Task
-                tasks={tasks} modalFlag={modalFlag} setModalFlag={setModalFlag}
+                tasks={tasks} setTasks={setTasks} 
+                modalFlag={modalFlag} setModalFlag={setModalFlag}
                 setEditFlag={setEditFlag} setEditTaskId={setEditTaskId}
+                filteredTasks={filteredTasks} 
             />
         </>
     );
