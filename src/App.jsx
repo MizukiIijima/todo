@@ -15,7 +15,6 @@ function App() {
     const [filterForm, setFilterForm] = useState({});
     const [filteredTasks, setFilteredTasks] = useState([]);
 
-    // ローカルストレージの値をformdataに設定
     useEffect(() => {
         const storedTasks = [];
         for (let i = 0; i < localStorage.length; i++) {
@@ -26,6 +25,17 @@ function App() {
         setTasks(storedTasks);
         setFilteredTasks(storedTasks);
     }, []);
+
+    // tasksまたはfilterFormが変更されたときにfilteredTasksを更新
+    useEffect(() => {
+        const { status, keyword } = filterForm;
+        const newFilteredTasks = tasks.filter(task => {
+            const statusMatch = !status || task.status === status;
+            const keywordMatch = !keyword || task.title.includes(keyword) || task.description.includes(keyword);
+            return statusMatch && keywordMatch;
+        });
+        setFilteredTasks(newFilteredTasks);
+    }, [tasks, filterForm]);
 
     return (
         <>
