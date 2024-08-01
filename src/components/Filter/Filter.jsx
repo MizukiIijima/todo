@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Button, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import "./Filter.css";
 
-export const Filter = ({ states, setStatus, tasks, setTasks, filterForm, setFilterForm, filteredTasks, setFilteredTasks }) => {
+export const Filter = ({ tasks, setFilterForm, setFilteredTasks }) => {
     const { register, handleSubmit, getValues } = useForm();
 
     const searchTask = () => {
@@ -22,7 +22,6 @@ export const Filter = ({ states, setStatus, tasks, setTasks, filterForm, setFilt
             }
         });
 
-        console.log(newFilteredTasks);  // 確認用ログ
         setFilteredTasks(newFilteredTasks);
     };
 

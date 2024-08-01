@@ -6,12 +6,8 @@ import { Task } from "./components/Task/Task.jsx";
 import './App.css'
 
 function App() {
-    
 
-    const [status, setStatus] = useState();
     const [modalFlag, setModalFlag] = useState(false);
-    // const [taskTitle, setTaskTitle] = useState("");
-    // const [taskDescription, setTaskDescription] = useState("");
     const [formdata, setFormdata] = useState({});
     const [tasks, setTasks] = useState([]);
     const [editFlag, setEditFlag] = useState(false);
@@ -34,11 +30,7 @@ function App() {
     return (
         <>
             <CreateBtn modalFlag={modalFlag} setModalFlag={setModalFlag} />
-            <Filter
-                status={status} setStatus={setStatus}
-                tasks={tasks} setTasks={setTasks}
-                filterForm={filterForm} setFilterForm={setFilterForm}
-                filteredTasks={filteredTasks} setFilteredTasks={setFilteredTasks}/>
+            <Filter tasks={tasks} setFilterForm={setFilterForm} setFilteredTasks={setFilteredTasks}/>
             <ModalComponent
                 modalFlag={modalFlag} setModalFlag={setModalFlag}
                 formdata={formdata} setFormdata={setFormdata}
@@ -47,11 +39,10 @@ function App() {
                 editTaskId={editTaskId} setEditTaskId={setEditTaskId}
             />
             <Task
-                tasks={filteredTasks}  // filteredTasks を表示するために使用
-                setTasks={setTasks}
-                modalFlag={modalFlag} setModalFlag={setModalFlag}
-                setEditFlag={setEditFlag} setEditTaskId={setEditTaskId}
-                filteredTasks={filteredTasks}
+                tasks={filteredTasks}
+                setModalFlag={setModalFlag}
+                setEditFlag={setEditFlag}
+                setEditTaskId={setEditTaskId}
             />
         </>
     );

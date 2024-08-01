@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import "./Task.css";
 
-export const Task = ({ tasks, setTasks, setModalFlag, setEditFlag, setEditTaskId, filteredTasks }) => {
+export const Task = ({ tasks, setModalFlag, setEditFlag, setEditTaskId }) => {
 
     const handleClick = useCallback((taskId) => {
         setModalFlag(true);

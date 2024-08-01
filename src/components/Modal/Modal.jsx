@@ -1,11 +1,11 @@
 import Modal from "react-modal";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { TextField, Button, InputLabel, MenuItem, Select } from "@mui/material";
 import "./Modal.css";
 
-export const ModalComponent = ({ modalFlag, setModalFlag, formdata, setFormdata, tasks, setTasks, editFlag, setEditFlag, editTaskId, setEditTaskId }) => {
+export const ModalComponent = ({ modalFlag, setModalFlag, setFormdata, tasks, setTasks, editFlag, setEditFlag, editTaskId, setEditTaskId }) => {
 
     const { register, control, handleSubmit, reset, setValue, formState: { errors } } = useForm({
         defaultValues: {
