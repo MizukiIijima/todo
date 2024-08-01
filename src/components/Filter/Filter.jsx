@@ -1,36 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import "./Filter.css";
 
-export const Filter = ({states, setStatus, tasks, filterForm, setFilterForm, filteredTasks, setFilteredTasks}) => {
-
-    const { register, handleSubmit, getValues, setValue} = useForm();
+export const Filter = ({ states, setStatus, tasks, setTasks, filterForm, setFilterForm, filteredTasks, setFilteredTasks }) => {
+    const { register, handleSubmit, getValues } = useForm();
 
     const searchTask = () => {
+        // フィルターの値を取得
         const filterStatus = getValues();
         setFilterForm(filterStatus);
-        let filteredTasks = [];
+        let newFilteredTasks = [];
 
         tasks.forEach(task => {
             const keywordMatch = task.description.includes(filterStatus.keyword);
             const statusMatch = filterStatus.status === task.status;
 
-            // 検索キーワードを含みステータスが一致する場合
-            if (keywordMatch && statusMatch) {
-                filteredTasks.push(task);
-            } else if (statusMatch) {
-                filteredTasks.push(task);
+            // 検索キーワードを含みステータスが一致する場合のみ追加
+            if (statusMatch && (keywordMatch || !filterStatus.keyword)) {
+                newFilteredTasks.push(task);
             }
         });
 
-        setFilteredTasks(filteredTasks);
-
-    }
+        console.log(newFilteredTasks);  // 確認用ログ
+        setFilteredTasks(newFilteredTasks);
+    };
 
     useEffect(() => {
         setFilterForm(getValues());
-    }, []);
+    }, [getValues, setFilterForm]);
 
     return(
         <form onSubmit={handleSubmit(searchTask)} className="filter">
@@ -43,7 +41,7 @@ export const Filter = ({states, setStatus, tasks, filterForm, setFilterForm, fil
                 <FormControlLabel value={"working"} {...register("status")} control={<Radio/>} label={"作業中"}/>
                 <FormControlLabel value={"complete"} {...register("status")} control={<Radio/>} label={"完了"}/>
             </RadioGroup>
-            <TextField 
+            <TextField
                 type="text" label="キーワード" className="keywordText"
                 defaultValue={""}
                 {...register("keyword")}

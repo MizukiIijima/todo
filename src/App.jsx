@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
-import { CreateBtn } from './components/CreateBtn/CreateBtn'
-import { Filter } from "./components/Filter/Filter.jsx"
-import { ModalComponent } from './components/Modal/Modal.jsx'
+import { useEffect, useState } from 'react';
+import { CreateBtn } from './components/CreateBtn/CreateBtn';
+import { Filter } from "./components/Filter/Filter.jsx";
+import { ModalComponent } from './components/Modal/Modal.jsx';
 import { Task } from "./components/Task/Task.jsx";
 import './App.css'
 
 function App() {
+    
 
     const [status, setStatus] = useState();
     const [modalFlag, setModalFlag] = useState(false);
@@ -18,9 +19,8 @@ function App() {
     const [filterForm, setFilterForm] = useState({});
     const [filteredTasks, setFilteredTasks] = useState([]);
 
-    //ローカルストレージの値をformdataに設定
+    // ローカルストレージの値をformdataに設定
     useEffect(() => {
-        
         const storedTasks = [];
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
@@ -28,21 +28,15 @@ function App() {
             storedTasks.push({ id: key, ...task });
         }
         setTasks(storedTasks);
-
+        setFilteredTasks(storedTasks);
     }, []);
-
-    useEffect(() => {
-        if (filteredTasks.length) {
-            setTasks(filteredTasks);
-        }
-    }, [filteredTasks]);
 
     return (
         <>
             <CreateBtn modalFlag={modalFlag} setModalFlag={setModalFlag} />
             <Filter
                 status={status} setStatus={setStatus}
-                tasks={tasks}
+                tasks={tasks} setTasks={setTasks}
                 filterForm={filterForm} setFilterForm={setFilterForm}
                 filteredTasks={filteredTasks} setFilteredTasks={setFilteredTasks}/>
             <ModalComponent
@@ -53,10 +47,11 @@ function App() {
                 editTaskId={editTaskId} setEditTaskId={setEditTaskId}
             />
             <Task
-                tasks={tasks} setTasks={setTasks} 
+                tasks={filteredTasks}  // filteredTasks を表示するために使用
+                setTasks={setTasks}
                 modalFlag={modalFlag} setModalFlag={setModalFlag}
                 setEditFlag={setEditFlag} setEditTaskId={setEditTaskId}
-                filteredTasks={filteredTasks} 
+                filteredTasks={filteredTasks}
             />
         </>
     );
