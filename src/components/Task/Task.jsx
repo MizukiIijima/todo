@@ -11,6 +11,8 @@ export const Task = ({ tasks, setModalFlag, setEditFlag, setEditTaskId }) => {
 
     const getStatus = (status) => {
         switch(status){
+            case "all":
+                return "全て";
             case "notStart":
                 return "未着手";
             case "working":

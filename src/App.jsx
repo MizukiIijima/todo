@@ -30,7 +30,7 @@ function App() {
     useEffect(() => {
         const { status, keyword } = filterForm;
         const newFilteredTasks = tasks.filter(task => {
-            const statusMatch = !status || task.status === status;
+            const statusMatch = task.status === status || status === "all";
             const keywordMatch = !keyword || task.title.includes(keyword) || task.description.includes(keyword);
             return statusMatch && keywordMatch;
         });

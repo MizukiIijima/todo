@@ -14,7 +14,12 @@ export const Filter = ({ tasks, setFilterForm, setFilteredTasks }) => {
 
         tasks.forEach(task => {
             const keywordMatch = task.description.includes(filterStatus.keyword);
-            const statusMatch = filterStatus.status === task.status;
+            let statusMatch;
+            if(filterStatus.status === task.status){
+                statusMatch = filterStatus.status;                
+            } else if(filterStatus.status === "all"){
+                statusMatch = "all";
+            }
 
             // 検索キーワードを含みステータスが一致する場合のみ追加
             if (statusMatch && (keywordMatch || !filterStatus.keyword)) {
@@ -33,9 +38,10 @@ export const Filter = ({ tasks, setFilterForm, setFilteredTasks }) => {
         <form onSubmit={handleSubmit(searchTask)} className="filter">
             <FormLabel>ステータス</FormLabel>
             <RadioGroup
-                defaultValue={"notStart"}
+                defaultValue={"all"}
                 row
             >
+                <FormControlLabel value={"all"} {...register("status")} control={<Radio/>} label={"全て"}/>
                 <FormControlLabel value={"notStart"} {...register("status")} control={<Radio/>} label={"未着手"}/>
                 <FormControlLabel value={"working"} {...register("status")} control={<Radio/>} label={"作業中"}/>
                 <FormControlLabel value={"complete"} {...register("status")} control={<Radio/>} label={"完了"}/>
